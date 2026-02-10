@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 40" fill="none">
+  <!-- 人才：简笔人形 -->
+  <circle cx="14" cy="10" r="5" fill="#2563eb"/>
+  <path d="M10 20v-2.5a1.5 1.5 0 0 1 1.5-1.5h5a1.5 1.5 0 0 1 1.5 1.5V20" stroke="#2563eb" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+  <!-- 数字化：四格数据节点 -->
+  <rect x="26" y="4" width="7" height="7" rx="1" stroke="#2563eb" stroke-width="1.4" fill="none"/>
+  <rect x="35" y="4" width="7" height="7" rx="1" stroke="#2563eb" stroke-width="1.4" fill="none"/>
+  <rect x="26" y="13" width="7" height="7" rx="1" stroke="#2563eb" stroke-width="1.4" fill="none"/>
+  <rect x="35" y="13" width="7" height="7" rx="1" stroke="#2563eb" stroke-width="1.4" fill="none"/>
+  <text x="50" y="26" font-family="system-ui, sans-serif" font-size="15" font-weight="600" fill="#1a1d21">Exquisys</text>
+</svg>
