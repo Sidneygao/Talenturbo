@@ -13,14 +13,92 @@
   <header class="site-header">
     <div class="container header-inner">
       <a href="index.html" class="logo-link">
-        <img src="LOGO.jpg" alt="Talenturbo 玄码智创" class="logo-img" width="160" height="40">
+        <img src="LOGO.jpg" alt="Talenturbo" class="logo-img">
+        <span class="logo-text" data-i18n="logo.text">玄码智创</span>
       </a>
       <nav class="nav-main" aria-label="主导航">
-        <a href="products.html" data-i18n="nav.products">产品</a>
-        <a href="services.html" data-i18n="nav.services">专业服务</a>
+        <div class="nav-item">
+          <a href="products.html" data-i18n="nav.products">产品</a>
+          <div class="dropdown-menu">
+            <a href="products.html#hrcore" class="dropdown-item">
+              <strong>HR CORE</strong>
+              <span data-i18n="products.hrcore.tagline">标准的人力资源运营平台</span>
+            </a>
+            <a href="products.html#smartassess" class="dropdown-item">
+              <strong>SmartAssess</strong>
+              <span data-i18n="products.smartassess.tagline">智能人才测评平台</span>
+            </a>
+            <a href="products.html#smartprojects" class="dropdown-item">
+              <strong>SmartProjects</strong>
+              <span data-i18n="products.smartprojects.tagline">基于项目的智能人力分配</span>
+            </a>
+            <a href="products.html#smartisans" class="dropdown-item">
+              <strong>Smartisans</strong>
+              <span data-i18n="products.smartisans.tagline">高颗粒度胜任力模型</span>
+            </a>
+            <a href="products.html#smartcompliance" class="dropdown-item">
+              <strong>SmartCompliance</strong>
+              <span data-i18n="products.smartcompliance.tagline">智能合规</span>
+            </a>
+            <a href="products.html#smartprofiling" class="dropdown-item">
+              <strong>SmartProfiling</strong>
+              <span data-i18n="products.smartprofiling.tagline">智能匹配与排名</span>
+            </a>
+            <a href="products.html#custom" class="dropdown-item">
+              <strong data-i18n="products.custom.title">定制数字化管理平台</strong>
+              <span data-i18n="products.custom.highlight">在梳理管理框架的基础上，完全定制开发</span>
+            </a>
+          </div>
+        </div>
+        <div class="nav-item">
+          <a href="services.html" data-i18n="nav.services">专业服务</a>
+          <div class="dropdown-menu">
+            <a href="services.html#framework" class="dropdown-item">
+              <strong data-i18n="services.s1.title">HR 框架与组织设计</strong>
+            </a>
+            <a href="services.html#compensation" class="dropdown-item">
+              <strong data-i18n="services.s2.title">薪酬与激励体系</strong>
+            </a>
+            <a href="services.html#performance" class="dropdown-item">
+              <strong data-i18n="services.s3.title">绩效管理</strong>
+            </a>
+            <a href="services.html#talent" class="dropdown-item">
+              <strong data-i18n="services.s4.title">人才发展与测评</strong>
+            </a>
+            <a href="services.html#digital" class="dropdown-item">
+              <strong data-i18n="services.s5.title">HR 数字化转型</strong>
+            </a>
+            <a href="services.html#ssc" class="dropdown-item">
+              <strong data-i18n="services.s6.title">共享服务中心 (SSC)</strong>
+            </a>
+            <a href="services.html#ma" class="dropdown-item">
+              <strong data-i18n="services.s7.title">并购 HR 支持</strong>
+            </a>
+            <a href="services.html#recruitment" class="dropdown-item">
+              <strong data-i18n="services.s8.title">招聘与编制优化</strong>
+            </a>
+          </div>
+        </div>
         <a href="cases.html" data-i18n="nav.cases">成功案例</a>
         <a href="partners.html" data-i18n="nav.partners">合作伙伴</a>
-        <a href="about.html" class="nav-active" data-i18n="nav.about">关于</a>
+        <div class="nav-item">
+          <a href="about.html" class="nav-active" data-i18n="nav.about">关于</a>
+          <div class="dropdown-menu">
+            <a href="about.html#intro" class="dropdown-item">
+              <strong data-i18n="about.menu.intro">公司简介</strong>
+            </a>
+            <a href="about.html#management" class="dropdown-item">
+              <strong data-i18n="about.menu.management">管理团队</strong>
+            </a>
+            <a href="about.html#team" class="dropdown-item">
+              <strong data-i18n="about.menu.team">团队成员</strong>
+            </a>
+            <a href="#contact" class="dropdown-item">
+              <strong data-i18n="about.menu.contact">联系我们</strong>
+              <span data-i18n="about.menu.contact.desc">待定</span>
+            </a>
+          </div>
+        </div>
       </nav>
       <div class="header-actions">
         <button type="button" class="lang-toggle" id="langToggle" aria-label="切换语言">EN</button>

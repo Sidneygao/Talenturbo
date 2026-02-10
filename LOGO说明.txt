@@ -1,0 +1,22 @@
+关于 LOGO 淡蓝色背景的说明：
+
+如果 LOGO.jpg 图片本身就带有淡蓝色背景，有以下几种解决方案：
+
+方案1：替换图片（推荐）
+- 使用图片编辑软件（如 Photoshop、GIMP）打开 LOGO.jpg
+- 去除背景色，保存为透明背景的 PNG 格式
+- 将文件重命名为 LOGO.png
+- 在所有 HTML 文件中将 src="LOGO.jpg" 改为 src="LOGO.png"
+
+方案2：使用 CSS 滤镜（已应用）
+- 当前已添加 CSS 规则：
+  filter: saturate(0.8) brightness(1.05);
+  mix-blend-mode: darken;
+- 这会降低饱和度并使用混合模式来减少背景色的影响
+
+方案3：使用 SVG 格式
+- 将 LOGO 转换为 SVG 矢量格式
+- SVG 可以完全控制颜色，且缩放不失真
+
+建议：
+如果当前的 CSS 滤镜效果不理想，请提供一个没有背景色的 LOGO 图片文件。

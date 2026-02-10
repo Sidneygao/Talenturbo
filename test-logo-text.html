@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>LOGO + 文字测试</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    body {
+      padding: 40px;
+    }
+    .test-box {
+      background: white;
+      padding: 30px;
+      margin: 20px 0;
+      border: 2px solid #ddd;
+      border-radius: 8px;
+    }
+    .demo-header {
+      background: rgba(255,255,255,.95);
+      padding: 20px;
+      border: 1px solid #e5e7eb;
+      margin: 20px 0;
+    }
+  </style>
+</head>
+<body>
+  <h1>LOGO + 文字切换测试</h1>
+  
+  <div class="test-box">
+    <h2>当前语言切换</h2>
+    <button id="langToggle" style="padding: 15px 30px; font-size: 18px; cursor: pointer;">-</button>
+    <p>点击按钮切换语言，观察 LOGO 旁边的文字变化</p>
+  </div>
+  
+  <div class="test-box">
+    <h2>LOGO 显示效果</h2>
+    <div class="demo-header">
+      <a href="index.html" class="logo-link">
+        <img src="LOGO.jpg" alt="Talenturbo" class="logo-img">
+        <span class="logo-text" data-i18n="logo.text">玄码智创</span>
+      </a>
+    </div>
+    <p><strong>预期效果：</strong></p>
+    <ul>
+      <li>中文版：LOGO 图片 + "玄码智创"</li>
+      <li>英文版：LOGO 图片 + "Talenturbo"</li>
+    </ul>
+  </div>
+  
+  <div class="test-box">
+    <h2>当前状态</h2>
+    <p><strong>当前语言:</strong> <span id="currentLang">-</span></p>
+    <p><strong>LOGO 文字:</strong> <span id="logoText">-</span></p>
+  </div>
+
+  <script src="js/i18n.js"></script>
+  <script src="js/main.js"></script>
+  <script>
+    function updateStatus() {
+      if (!window.ExquisysI18n) return;
+      
+      var lang = window.ExquisysI18n.lang;
+      document.getElementById('currentLang').textContent = lang === 'zh' ? '中文' : '英文';
+      
+      var logoText = document.querySelector('.logo-text');
+      if (logoText) {
+        document.getElementById('logoText').textContent = logoText.textContent;
+      }
+    }
+    
+    setTimeout(updateStatus, 100);
+    setInterval(updateStatus, 500);
+  </script>
+</body>
+</html>

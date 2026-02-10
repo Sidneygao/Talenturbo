@@ -1,14 +1,11 @@
 (function () {
-  // 获取保存的语言设置，默认为中文
-  var currentLang = localStorage.getItem('exquisys-lang') || 'zh';
+  var lang = localStorage.getItem('exquisys-lang') || 'zh';
   
   // 立即设置 HTML lang 属性
-  document.documentElement.lang = currentLang === 'zh' ? 'zh-CN' : 'en';
+  document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
   
-  // 翻译数据
-  var translations = {
+  var t = {
     zh: {
-      'logo.text': '玄码智创',
       'nav.products': '产品',
       'nav.services': '专业服务',
       'nav.cases': '成功案例',
@@ -77,11 +74,6 @@
       'partners.feihec.desc': '北京飞翮信息技术有限公司，为人力资源和业务外包服务业提供 HRO/BPO/RPO 全流程管理 SaaS 系统',
       'partners.learn_more': '了解更多',
       'about.management.title': '公司管理层',
-      'about.menu.intro': '公司简介',
-      'about.menu.management': '管理团队',
-      'about.menu.team': '团队成员',
-      'about.menu.contact': '联系我们',
-      'about.menu.contact.desc': '待定',
       'about.exec0.role': '执行董事',
       'about.exec0.bio': '<p><strong>简介</strong></p><p>王立刚先生为飞翮智享（北京飞翮信息技术有限公司）CEO。2020 年第十八届中国人力资源数字化论坛受邀主题演讲嘉宾，阐述数字化转型对企业人力资源创新的重要性，强调数字化是人力资源管理创新成功的基础。</p><p>飞翮智享致力于为人力资源服务企业提供一站式数字化解决方案，产品覆盖 HRO、RPO、BPO 和 FMO 四大核心业务板块，为人力资源和业务外包服务业提供全流程管理 SaaS 系统。</p>',
       'about.exec1.role': '执行董事',
@@ -90,7 +82,6 @@
       'about.exec1.bio': '<p><strong>概要</strong></p><p>人力资源领域资深专家，提供从战略设计到落地执行的全面 HR 咨询服务，服务多行业客户。WorldatWork 与 GPMIP 成员；2019 年度 HREC 演讲嘉宾；西交利物浦大学认证客座讲师。</p><p><strong>职业经历</strong></p><p>曾任职于卡夫、百特、可口可乐、霍尼韦尔、朗讯、恩智浦、强生、SAP 等跨国企业。曾任 SAP、恩智浦、利洁时（高级）人力资源总监；曾任可口可乐、霍尼韦尔、朗讯人力资源经理。</p><p><strong>专长</strong></p><p>在人力资源管理的各领域拥有丰富经验。</p>'
     },
     en: {
-      'logo.text': 'Talenturbo',
       'nav.products': 'Products',
       'nav.services': 'Services',
       'nav.cases': 'Cases',
@@ -154,11 +145,6 @@
       'about.team.title': 'Team',
       'about.team.tbd': 'Coming soon',
       'about.management.title': 'Company management',
-      'about.menu.intro': 'Company Profile',
-      'about.menu.management': 'Management Team',
-      'about.menu.team': 'Team Members',
-      'about.menu.contact': 'Contact Us',
-      'about.menu.contact.desc': 'Coming soon',
       'about.exec0.role': 'Executive Director',
       'about.exec0.bio': '<p><strong>Profile</strong></p><p>Mr. Wang Ligang is CEO of Feihe Zhixiang (Beijing Feihe Information Technology Co., Ltd.). He was an invited keynote speaker at the 18th China HR Digitalization Forum in 2020, where he addressed the importance of digital transformation for enterprise HR innovation and emphasized that digitalization is the foundation for successful HR management innovation.</p><p>Feihe Zhixiang is dedicated to providing one-stop digital solutions for HR service enterprises, with products covering HRO, RPO, BPO and FMO, and full-process management SaaS for the HR and business process outsourcing industry.</p>',
       'about.exec1.role': 'Executive Director',
@@ -173,34 +159,32 @@
     }
   };
 
-  // 创建全局 i18n 对象
   window.ExquisysI18n = {
-    lang: currentLang,
-    
-    // 获取翻译文本
+    lang: lang,
+    t: t,
     tr: function (key) {
-      var langData = translations[this.lang];
-      return (langData && langData[key]) || translations.zh[key] || key;
+      var L = t[this.lang];
+      var result = (L && L[key]) || t.zh[key] || key;
+      return result;
     },
-    
-    // 设置语言
-    setLang: function (newLang) {
-      this.lang = newLang;
-      currentLang = newLang;
-      localStorage.setItem('exquisys-lang', newLang);
-      document.documentElement.lang = newLang === 'zh' ? 'zh-CN' : 'en';
+    setLang: function (l) {
+      this.lang = l;
+      lang = l;
+      localStorage.setItem('exquisys-lang', l);
+      document.documentElement.lang = l === 'zh' ? 'zh-CN' : 'en';
       
-      // 触发页面更新
       if (typeof window.applyI18n === 'function') {
         window.applyI18n();
       }
+      
+      if (typeof window.updateCompanyName === 'function') {
+        window.updateCompanyName();
+      }
     },
-    
-    // 切换语言
     toggleLang: function () {
-      var newLang = this.lang === 'zh' ? 'en' : 'zh';
-      this.setLang(newLang);
-      return newLang;
+      var next = this.lang === 'zh' ? 'en' : 'zh';
+      this.setLang(next);
+      return next;
     }
   };
 })();

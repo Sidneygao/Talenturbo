@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>国际化测试</title>
+  <style>
+    body { font-family: sans-serif; padding: 20px; }
+    .test-section { margin: 20px 0; padding: 15px; border: 1px solid #ccc; }
+    button { padding: 10px 20px; margin: 5px; cursor: pointer; }
+    .info { background: #f0f0f0; padding: 10px; margin: 10px 0; }
+  </style>
+</head>
+<body>
+  <h1>国际化功能测试</h1>
+  
+  <div class="test-section">
+    <h2>当前状态</h2>
+    <div class="info">
+      <p>当前语言: <strong id="currentLang">-</strong></p>
+      <p>localStorage 语言: <strong id="storageLang">-</strong></p>
+      <p>HTML lang 属性: <strong id="htmlLang">-</strong></p>
+    </div>
+  </div>
+  
+  <div class="test-section">
+    <h2>语言切换</h2>
+    <button id="langToggle">切换语言</button>
+    <button onclick="window.ExquisysI18n.setLang('zh')">设为中文</button>
+    <button onclick="window.ExquisysI18n.setLang('en')">设为英文</button>
+    <button onclick="localStorage.clear(); location.reload()">清除缓存并刷新</button>
+  </div>
+  
+  <div class="test-section">
+    <h2>翻译测试</h2>
+    <p data-i18n="nav.products">产品</p>
+    <p data-i18n="nav.services">专业服务</p>
+    <p data-i18n="hero.title">以先进的人力资源管理理念为中小型企业赋能</p>
+  </div>
+  
+  <div class="test-section">
+    <h2>公司名称测试</h2>
+    <p class="footer-name">北京玄码智创信息技术有限公司 · Talenturbo</p>
+  </div>
+  
+  <div class="test-section">
+    <h2>控制台日志</h2>
+    <p>请打开浏览器开发者工具（F12）查看控制台输出</p>
+  </div>
+
+  <script src="js/i18n.js"></script>
+  <script src="js/main.js"></script>
+  <script>
+    function updateStatus() {
+      document.getElementById('currentLang').textContent = window.ExquisysI18n.lang;
+      document.getElementById('storageLang').textContent = localStorage.getItem('exquisys-lang') || '未设置';
+      document.getElementById('htmlLang').textContent = document.documentElement.lang;
+      
+      var btn = document.getElementById('langToggle');
+      btn.textContent = window.ExquisysI18n.lang === 'zh' ? '切换到英文 (EN)' : '切换到中文 (CN)';
+    }
+    
+    document.addEventListener('DOMContentLoaded', function() {
+      updateStatus();
+      
+      document.getElementById('langToggle').addEventListener('click', function() {
+        window.ExquisysI18n.toggleLang();
+        updateStatus();
+      });
+      
+      // 监听语言变化
+      setInterval(updateStatus, 500);
+    });
+  </script>
+</body>
+</html>

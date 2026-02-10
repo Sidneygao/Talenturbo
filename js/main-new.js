@@ -4,9 +4,8 @@
     if (!window.ExquisysI18n) return;
     
     var lang = window.ExquisysI18n.lang;
-    
-    // 更新页脚公司名称
     var footerNames = document.querySelectorAll('.footer-name');
+    
     footerNames.forEach(function(el) {
       if (lang === 'en') {
         el.textContent = 'Talenturbo';
@@ -116,85 +115,6 @@
     });
   }
   
-  // 初始化下拉菜单定位
-  function initDropdownPosition() {
-    var navItems = document.querySelectorAll('.nav-item');
-    
-    navItems.forEach(function(item) {
-      var dropdown = item.querySelector('.dropdown-menu');
-      if (!dropdown) return;
-      
-      // 桌面端：将下拉菜单移到body下，避免被header的backdrop-filter限制
-      var isMobile = window.innerWidth <= 768;
-      
-      if (!isMobile) {
-        document.body.appendChild(dropdown);
-        dropdown.setAttribute('data-desktop-mode', 'true');
-      }
-      
-      function updatePosition() {
-        if (window.innerWidth > 768 && dropdown.getAttribute('data-desktop-mode') === 'true') {
-          var rect = item.getBoundingClientRect();
-          dropdown.style.top = rect.bottom + 'px';
-          dropdown.style.left = rect.left + 'px';
-        }
-      }
-      
-      item.addEventListener('mouseenter', function() {
-        if (window.innerWidth > 768) {
-          updatePosition();
-          dropdown.classList.add('show');
-        }
-      });
-      
-      item.addEventListener('mouseleave', function() {
-        if (window.innerWidth > 768) {
-          dropdown.classList.remove('show');
-        }
-      });
-      
-      dropdown.addEventListener('mouseenter', function() {
-        if (window.innerWidth > 768) {
-          dropdown.classList.add('show');
-        }
-      });
-      
-      dropdown.addEventListener('mouseleave', function() {
-        if (window.innerWidth > 768) {
-          dropdown.classList.remove('show');
-        }
-      });
-      
-      window.addEventListener('scroll', function() {
-        if (dropdown.classList.contains('show') && window.innerWidth > 768) {
-          updatePosition();
-        }
-      });
-      
-      window.addEventListener('resize', function() {
-        var nowMobile = window.innerWidth <= 768;
-        var wasDesktop = dropdown.getAttribute('data-desktop-mode') === 'true';
-        
-        if (nowMobile && wasDesktop) {
-          // 切换到移动端：将下拉菜单移回nav-item
-          item.appendChild(dropdown);
-          dropdown.removeAttribute('data-desktop-mode');
-          dropdown.classList.remove('show');
-          dropdown.style.top = '';
-          dropdown.style.left = '';
-        } else if (!nowMobile && !wasDesktop) {
-          // 切换到桌面端：将下拉菜单移到body
-          document.body.appendChild(dropdown);
-          dropdown.setAttribute('data-desktop-mode', 'true');
-        }
-        
-        if (!nowMobile) {
-          updatePosition();
-        }
-      });
-    });
-  }
-  
   // 初始化移动端菜单
   function initMobileMenu() {
     var toggle = document.querySelector('.mobile-menu-toggle');
@@ -221,38 +141,8 @@
       }
     });
     
-    // 移动端下拉菜单切换
-    var navItems = document.querySelectorAll('.nav-item');
-    navItems.forEach(function(item) {
-      var link = item.querySelector('a');
-      if (link && window.innerWidth <= 768) {
-        link.addEventListener('click', function(e) {
-          // 如果有下拉菜单，阻止默认跳转
-          var dropdown = item.querySelector('.dropdown-menu');
-          if (dropdown) {
-            e.preventDefault();
-            item.classList.toggle('mobile-open');
-          }
-        });
-      }
-    });
-    
-    // 点击下拉菜单项后关闭菜单
-    nav.querySelectorAll('.dropdown-item').forEach(function (link) {
-      link.addEventListener('click', function () {
-        toggle.classList.remove('active');
-        nav.classList.remove('mobile-menu-open');
-        overlay.classList.remove('active');
-        document.body.style.overflow = '';
-        // 关闭所有展开的下拉菜单
-        navItems.forEach(function(item) {
-          item.classList.remove('mobile-open');
-        });
-      });
-    });
-    
-    // 点击直接链接后关闭菜单
-    nav.querySelectorAll('.nav-main > a').forEach(function (link) {
+    // 点击菜单项后关闭菜单
+    nav.querySelectorAll('a').forEach(function (link) {
       link.addEventListener('click', function () {
         toggle.classList.remove('active');
         nav.classList.remove('mobile-menu-open');
@@ -267,10 +157,6 @@
       nav.classList.remove('mobile-menu-open');
       overlay.classList.remove('active');
       document.body.style.overflow = '';
-      // 关闭所有展开的下拉菜单
-      navItems.forEach(function(item) {
-        item.classList.remove('mobile-open');
-      });
     });
   }
 
@@ -292,6 +178,5 @@
     initAnimateIn();
     initMobileMenu();
     initScrollEffects();
-    initDropdownPosition();
   });
 })();
