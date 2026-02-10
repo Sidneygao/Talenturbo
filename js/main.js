@@ -225,12 +225,22 @@
     var navItems = document.querySelectorAll('.nav-item');
     navItems.forEach(function(item) {
       var link = item.querySelector('a');
-      if (link && window.innerWidth <= 768) {
+      if (link) {
         link.addEventListener('click', function(e) {
-          // 如果有下拉菜单，阻止默认跳转
+          // 如果有下拉菜单且在移动端，阻止默认跳转
           var dropdown = item.querySelector('.dropdown-menu');
-          if (dropdown) {
+          if (dropdown && window.innerWidth <= 768) {
             e.preventDefault();
+            e.stopPropagation();
+            
+            // 关闭其他展开的菜单
+            navItems.forEach(function(otherItem) {
+              if (otherItem !== item) {
+                otherItem.classList.remove('mobile-open');
+              }
+            });
+            
+            // 切换当前菜单
             item.classList.toggle('mobile-open');
           }
         });
