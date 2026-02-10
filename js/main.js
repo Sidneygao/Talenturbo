@@ -69,5 +69,53 @@ modal.addEventListener('click', function (e) {
     }
     initBioModal();
     initAnimateIn();
+    initMobileMenu();
+    initScrollEffects();
   });
+  
+  function initScrollEffects() {
+    var header = document.querySelector('.site-header');
+    if (!header) return;
+    
+    var lastScroll = 0;
+    window.addEventListener('scroll', function () {
+      var currentScroll = window.pageYOffset;
+      
+      if (currentScroll > 50) {
+        header.classList.add('scrolled');
+      } else {
+        header.classList.remove('scrolled');
+      }
+      
+      lastScroll = currentScroll;
+    });
+  }
+  
+  function initMobileMenu() {
+    var toggle = document.querySelector('.mobile-menu-toggle');
+    var nav = document.querySelector('.nav-main');
+    
+    if (!toggle || !nav) return;
+    
+    toggle.addEventListener('click', function () {
+      toggle.classList.toggle('active');
+      nav.classList.toggle('mobile-menu-open');
+    });
+    
+    // 点击菜单项后关闭菜单
+    nav.querySelectorAll('a').forEach(function (link) {
+      link.addEventListener('click', function () {
+        toggle.classList.remove('active');
+        nav.classList.remove('mobile-menu-open');
+      });
+    });
+    
+    // 点击外部关闭菜单
+    document.addEventListener('click', function (e) {
+      if (!toggle.contains(e.target) && !nav.contains(e.target)) {
+        toggle.classList.remove('active');
+        nav.classList.remove('mobile-menu-open');
+      }
+    });
+  }
 })();
