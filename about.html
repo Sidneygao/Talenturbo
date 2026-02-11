@@ -9,12 +9,12 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
-<body class="page">
+<body class="page about-page">
   <header class="site-header">
     <div class="container header-inner">
       <a href="index.html" class="logo-link">
         <img src="LOGO.jpg" alt="Talenturbo" class="logo-img">
-        <span class="logo-text" data-i18n="logo.text">玄码智创</span>
+        <span class="logo-text trademark" data-i18n="logo.text">玄码智创</span>
       </a>
       <nav class="nav-main" aria-label="主导航">
         <div class="nav-item">
@@ -25,23 +25,23 @@
               <span data-i18n="products.hrcore.tagline">标准的人力资源运营平台</span>
             </a>
             <a href="products.html#smartassess" class="dropdown-item">
-              <strong>SmartAssess</strong>
+              <strong class="trademark">SmartAssess</strong>
               <span data-i18n="products.smartassess.tagline">智能人才测评平台</span>
             </a>
             <a href="products.html#smartprojects" class="dropdown-item">
-              <strong>SmartProjects</strong>
+              <strong class="trademark">SmartProjects</strong>
               <span data-i18n="products.smartprojects.tagline">基于项目的智能人力分配</span>
             </a>
             <a href="products.html#smartisans" class="dropdown-item">
-              <strong>Smartisans</strong>
+              <strong class="trademark">Smartisans</strong>
               <span data-i18n="products.smartisans.tagline">高颗粒度胜任力模型</span>
             </a>
             <a href="products.html#smartcompliance" class="dropdown-item">
-              <strong>SmartCompliance</strong>
+              <strong class="trademark">SmartCompliance</strong>
               <span data-i18n="products.smartcompliance.tagline">智能合规</span>
             </a>
             <a href="products.html#smartprofiling" class="dropdown-item">
-              <strong>SmartProfiling</strong>
+              <strong class="trademark">SmartProfiling</strong>
               <span data-i18n="products.smartprofiling.tagline">智能匹配与排名</span>
             </a>
             <a href="products.html#custom" class="dropdown-item">
@@ -136,6 +136,14 @@
             <p class="management-role" data-i18n="about.exec1.role">执行董事</p>
             <button type="button" class="management-bio-btn" data-bio-open="1" data-i18n="about.view_bio">查看简介</button>
           </article>
+          <article class="management-card" data-exec="2">
+            <div class="management-photo-wrap">
+              <img src="assets/team/wangfeng.jpg" alt="王峰" class="management-photo" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 120 120%22%3E%3Ccircle cx=%2260%22 cy=%2245%22 r=%2225%22 fill=%22%232563eb%22 opacity=%22.25%22/%3E%3Cpath d=%22M40 95c0-11 9-20 20-20s20 9 20 20%22 fill=%22%232563eb%22 opacity=%22.25%22/%3E%3C/svg%3E'">
+            </div>
+            <h4 class="management-name">王峰</h4>
+            <p class="management-role" data-i18n="about.exec2.role">执行董事 + CTO</p>
+            <button type="button" class="management-bio-btn" data-bio-open="2" data-i18n="about.view_bio">查看简介</button>
+          </article>
         </div>
         <div class="about-team">
           <h3 data-i18n="about.team.title">团队</h3>
@@ -173,11 +181,26 @@
         </div>
       </div>
     </div>
+    <div id="bioModal2" class="bio-modal" aria-hidden="true" role="dialog" aria-labelledby="bioModalTitle2">
+      <div class="bio-modal-backdrop" data-bio-close></div>
+      <div class="bio-modal-box">
+        <div class="bio-modal-header">
+          <h3 id="bioModalTitle2" class="bio-modal-title">王峰</h3>
+          <button type="button" class="bio-modal-close" data-bio-close aria-label="关闭">&times;</button>
+        </div>
+        <div class="bio-modal-body">
+          <div class="bio-modal-photo">
+            <img src="assets/team/wangfeng.jpg" alt="王峰" onerror="this.style.display='none'">
+          </div>
+          <div class="bio-content" data-i18n="about.exec2.bio"></div>
+        </div>
+      </div>
+    </div>
   </main>
 
   <footer class="site-footer">
     <div class="container">
-      <p class="footer-name">北京玄码智创信息技术有限公司 · Talenturbo</p>
+      <p class="footer-name">北京玄码智创信息技术有限公司 · <span class="trademark">Talenturbo</span></p>
       <p class="footer-vision" data-i18n="hero.subtitle">以灵活定制的数字化方案为管理护航</p>
     </div>
   </footer>

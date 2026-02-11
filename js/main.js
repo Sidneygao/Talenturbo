@@ -86,7 +86,7 @@
 
   // 初始化动画
   function initAnimateIn() {
-    var els = document.querySelectorAll('.animate-in');
+    var els = document.querySelectorAll('.animate-in, .product-detail');
     if (!els.length) return;
     
     var io = new IntersectionObserver(function (entries) {
@@ -98,6 +98,17 @@
     }, { rootMargin: '0px 0px -40px 0px', threshold: 0.1 });
     
     els.forEach(function (el) { io.observe(el); });
+    
+    // 添加焦点效果
+    var productDetails = document.querySelectorAll('.product-detail');
+    productDetails.forEach(function(detail) {
+      detail.addEventListener('mouseenter', function() {
+        this.classList.add('in-focus');
+      });
+      detail.addEventListener('mouseleave', function() {
+        this.classList.remove('in-focus');
+      });
+    });
   }
 
   // 初始化滚动效果
