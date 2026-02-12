@@ -1077,6 +1077,21 @@ body.index-page .site-footer {
 }
 
 /* 产品详情页面 */
+.product-hero {
+  padding: 2rem 0 1rem;
+  text-align: center;
+}
+
+.product-hero-image {
+  width: 100%;
+  max-width: 1200px;
+  height: auto;
+  border-radius: var(--radius);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+  display: block;
+  margin: 0 auto;
+}
+
 .product-overview {
   text-align: center;
   padding: 3rem 0 2rem;
