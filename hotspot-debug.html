@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>热区调试工具</title>
+  <style>
+    body {
+      font-family: system-ui, sans-serif;
+      padding: 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .controls {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: white;
+      padding: 20px;
+      border: 2px solid #2563eb;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      z-index: 1000;
+    }
+    .controls h3 {
+      margin: 0 0 10px;
+      color: #2563eb;
+    }
+    .controls button {
+      display: block;
+      width: 100%;
+      padding: 8px 12px;
+      margin: 5px 0;
+      background: #2563eb;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .controls button:hover {
+      background: #1d4ed8;
+    }
+    .image-wrapper {
+      position: relative;
+      display: inline-block;
+      margin-top: 20px;
+    }
+    .image-wrapper img {
+      max-width: 100%;
+      display: block;
+    }
+    .hotspot {
+      position: absolute;
+      border: 2px solid red;
+      background: rgba(255, 0, 0, 0.2);
+      cursor: move;
+      transition: none;
+    }
+    .hotspot.active {
+      border-color: blue;
+      background: rgba(0, 0, 255, 0.3);
+    }
+    .hotspot-label {
+      position: absolute;
+      top: 5px;
+      left: 5px;
+      background: rgba(0, 0, 0, 0.7);
+      color: white;
+      padding: 2px 6px;
+      font-size: 12px;
+      border-radius: 3px;
+      pointer-events: none;
+    }
+    .hotspot-inner {
+      position: absolute;
+      inset: 5%;
+      border: 2px dashed blue;
+      background: rgba(0, 0, 255, 0.1);
+      pointer-events: none;
+    }
+    .info {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: white;
+      padding: 15px;
+      border: 2px solid #2563eb;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      font-family: monospace;
+      font-size: 12px;
+      max-width: 300px;
+    }
+    .info h4 {
+      margin: 0 0 10px;
+      color: #2563eb;
+    }
+  </style>
+</head>
+<body>
+  <h1>产品热区调试工具</h1>
+  <p>拖动红色框来调整热区位置，蓝色虚线框表示实际交互区域（90%）</p>
+  
+  <div class="controls">
+    <h3>控制面板</h3>
+    <button onclick="toggleHotspots()">显示/隐藏热区</button>
+    <button onclick="copyCoordinates()">复制坐标</button>
+    <button onclick="resetPositions()">重置位置</button>
+  </div>
+  
+  <div class="info" id="info">
+    <h4>当前选中：无</h4>
+    <div id="coordinates"></div>
+  </div>
+  
+  <div class="image-wrapper" id="imageWrapper">
+    <img src="Talenturbo_Product_Overview.png" alt="产品概览" id="productImage">
+    
+    <!-- 热区 -->
+    <div class="hotspot" data-product="smartassess" style="top: 24.875%; left: 10.5%; width: 20%; height: 18%;">
+      <div class="hotspot-label">SmartAssess</div>
+      <div class="hotspot-inner"></div>
+    </div>
+    
+    <div class="hotspot" data-product="smartprojects" style="top: 12.875%; left: 39.75%; width: 20%; height: 18%;">
+      <div class="hotspot-label">SmartProjects</div>
+      <div class="hotspot-inner"></div>
+    </div>
+    
+    <div class="hotspot" data-product="smartprofiling" style="top: 56.625%; left: 69%; width: 20%; height: 18%;">
+      <div class="hotspot-label">SmartProfiling</div>
+      <div class="hotspot-inner"></div>
+    </div>
+    
+    <div class="hotspot" data-product="smartcompliance" style="top: 56.875%; left: 11.5833%; width: 20%; height: 18%;">
+      <div class="hotspot-label">SmartCompliance</div>
+      <div class="hotspot-inner"></div>
+    </div>
+    
+    <div class="hotspot" data-product="smartisans" style="top: 25.375%; left: 69.5%; width: 20%; height: 18%;">
+      <div class="hotspot-label">Smartisans</div>
+      <div class="hotspot-inner"></div>
+    </div>
+  </div>
+
+  <script>
+    let activeHotspot = null;
+    let isDragging = false;
+    let startX, startY, startLeft, startTop;
+    
+    const hotspots = document.querySelectorAll('.hotspot');
+    const info = document.getElementById('info');
+    const coordinates = document.getElementById('coordinates');
+    
+    // 初始位置
+    const initialPositions = {};
+    hotspots.forEach(hotspot => {
+      const product = hotspot.dataset.product;
+      initialPositions[product] = {
+        top: hotspot.style.top,
+        left: hotspot.style.left,
+        width: hotspot.style.width,
+        height: hotspot.style.height
+      };
+    });
+    
+    // 拖动功能
+    hotspots.forEach(hotspot => {
+      hotspot.addEventListener('mousedown', (e) => {
+        e.preventDefault();
+        isDragging = true;
+        activeHotspot = hotspot;
+        hotspot.classList.add('active');
+        
+        const rect = hotspot.getBoundingClientRect();
+        const parentRect = hotspot.parentElement.getBoundingClientRect();
+        
+        startX = e.clientX;
+        startY = e.clientY;
+        startLeft = rect.left - parentRect.left;
+        startTop = rect.top - parentRect.top;
+        
+        updateInfo(hotspot);
+      });
+    });
+    
+    document.addEventListener('mousemove', (e) => {
+      if (!isDragging || !activeHotspot) return;
+      
+      const parentRect = activeHotspot.parentElement.getBoundingClientRect();
+      const deltaX = e.clientX - startX;
+      const deltaY = e.clientY - startY;
+      
+      const newLeft = ((startLeft + deltaX) / parentRect.width) * 100;
+      const newTop = ((startTop + deltaY) / parentRect.height) * 100;
+      
+      activeHotspot.style.left = Math.max(0, Math.min(100, newLeft)) + '%';
+      activeHotspot.style.top = Math.max(0, Math.min(100, newTop)) + '%';
+      
+      updateInfo(activeHotspot);
+    });
+    
+    document.addEventListener('mouseup', () => {
+      if (activeHotspot) {
+        activeHotspot.classList.remove('active');
+      }
+      isDragging = false;
+      activeHotspot = null;
+    });
+    
+    function updateInfo(hotspot) {
+      const product = hotspot.dataset.product;
+      info.querySelector('h4').textContent = `当前选中：${product}`;
+      coordinates.innerHTML = `
+        <strong>位置坐标：</strong><br>
+        top: ${hotspot.style.top}<br>
+        left: ${hotspot.style.left}<br>
+        width: ${hotspot.style.width}<br>
+        height: ${hotspot.style.height}
+      `;
+    }
+    
+    function toggleHotspots() {
+      hotspots.forEach(hotspot => {
+        hotspot.style.display = hotspot.style.display === 'none' ? 'block' : 'none';
+      });
+    }
+    
+    function copyCoordinates() {
+      let output = '<!-- 热区坐标 -->\n';
+      hotspots.forEach(hotspot => {
+        const product = hotspot.dataset.product;
+        output += `${product}: top: ${hotspot.style.top}; left: ${hotspot.style.left}; width: ${hotspot.style.width}; height: ${hotspot.style.height}\n`;
+      });
+      
+      navigator.clipboard.writeText(output).then(() => {
+        alert('坐标已复制到剪贴板！');
+      });
+    }
+    
+    function resetPositions() {
+      hotspots.forEach(hotspot => {
+        const product = hotspot.dataset.product;
+        const pos = initialPositions[product];
+        hotspot.style.top = pos.top;
+        hotspot.style.left = pos.left;
+        hotspot.style.width = pos.width;
+        hotspot.style.height = pos.height;
+      });
+      alert('位置已重置！');
+    }
+  </script>
+</body>
+</html>
