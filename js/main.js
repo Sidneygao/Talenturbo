@@ -29,7 +29,19 @@
       var text = tr(key);
       
       // 对于包含 HTML 的内容使用 innerHTML
-      if (key === 'about.intro' || key === 'about.exec0.bio' || key === 'about.exec1.bio') {
+      if (key === 'about.intro' || 
+          key === 'about.exec0.bio' || 
+          key === 'about.exec1.bio' ||
+          key === 'products.smartisans.desc' ||
+          key === 'products.smartisans.feature1.desc' ||
+          key === 'products.smartisans.feature2.desc' ||
+          key === 'products.smartisans.feature3.desc' ||
+          key === 'products.smartassess.feature1.desc' ||
+          key === 'products.smartassess.feature2.desc' ||
+          key === 'products.smartassess.feature3.desc' ||
+          key === 'products.smartprojects.highlight' ||
+          key === 'products.smartprojects.feature1.desc' ||
+          key === 'products.smartprofiling.feature3.desc') {
         el.innerHTML = text;
       } else {
         el.textContent = text;
